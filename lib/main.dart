@@ -1,31 +1,46 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(new MaterialApp(home: new Application()));
+  runApp(new MaterialApp(home: new application()));
 }
 
-class Application extends StatefulWidget {
+class application extends StatefulWidget {
   @override
-  _ApplicationState createState() => _ApplicationState();
+  _applicationState createState() => _applicationState();
 }
 
-class _ApplicationState extends State<Application> {
-  String txt = '';
+class _applicationState extends State<application>
+with SingleTickerProviderStateMixin {
+  
+  TabController tabController;
+
+  void initState() {
+    tabController = new TabController(length: 4, vsync: this);
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        backgroundColor: Colors.orange,
-        title: new Text('AppBar Widget'),
-        leading: new Icon(Icons.menu),
-        actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.access_time), onPressed: (){txt= 'This is Arrow Button';}),
-          new IconButton(icon: new Icon(Icons.data_usage), onPressed: (){txt= 'This is Arrow Button';}),
-        ],
+        title: new Text('TabBar App'),
+        bottom: new TabBar(
+          controller: tabController,
+          tabs: <Widget>[
+            new Tab(icon: new Icon(Icons.home),),
+            new Tab(icon: new Icon(Icons.dashboard),),
+            new Tab(icon: new Icon(Icons.data_usage),),
+            new Tab(icon: new Icon(Icons.close),),
+          ],
+        ),
+
       ),
-      body: new Center(
-        child: new Text(txt),
-      ),
+      body: new TabBarView(
+        controller: tabController,
+        children: <Widget>[
+          new Center(child: new Text('Welcome To Home'),),
+          new Center(child: new Text('Welcome To Dashboard'),),
+          new Center(child: new Text('Welcome To Data Usage'),),
+          new Center(child: new Text('Welcome To Close'),),
+        ]),
     );
   }
 }
