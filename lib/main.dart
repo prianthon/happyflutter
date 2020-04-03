@@ -10,19 +10,29 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
+
+  List<int> itemgrid = new List();
+
+  @override
+  void initState() {
+    for (int i = 0; i < 30; i++)
+      itemgrid.add(i);
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: new Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          new Card(color: Colors.red,child: new Padding(padding: const EdgeInsets.all(250.0)),),
-          new Card(color: Colors.yellow,child: new Padding(padding: const EdgeInsets.all(200)),),
-          new Card(color: Colors.green,child: new Padding(padding: const EdgeInsets.all(150.0)),),
-          new Card(color: Colors.blue,child: new Padding(padding: const EdgeInsets.all(100.0)),),
-          new Card(color: Colors.black,child: new Padding(padding: const EdgeInsets.all(20.0)),),
-        ],
-      ),
+      body: new GridView.builder(
+        itemCount: itemgrid.length,
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4),
+        itemBuilder: (BuildContext context ,int
+            index) {
+          return new Card(
+          color: Colors.blue,
+          child: new Padding(padding: const EdgeInsets.all(25.0)),
+          );
+          })
     );
   }
 }
