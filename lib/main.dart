@@ -10,15 +10,21 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
+  String txt = '';
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.orange,
         title: new Text('AppBar Widget'),
-        titleSpacing: 80.0,
-        elevation: 35.0,
-        toolbarOpacity: 0.5,
+        leading: new Icon(Icons.menu),
+        actions: <Widget>[
+          new IconButton(icon: new Icon(Icons.access_time), onPressed: (){txt= 'This is Arrow Button';}),
+          new IconButton(icon: new Icon(Icons.data_usage), onPressed: (){txt= 'This is Arrow Button';}),
+        ],
+      ),
+      body: new Center(
+        child: new Text(txt),
       ),
     );
   }
