@@ -11,7 +11,13 @@ class application extends StatefulWidget {
 
 class _applicationState extends State<application> {
 
-  String text = '';
+  String textButton = '';
+
+  void method1(value) {
+    setState(() {
+      textButton = value;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -19,20 +25,19 @@ class _applicationState extends State<application> {
       home: new Scaffold(
         appBar: new AppBar(
           backgroundColor: Colors.green,
-          title: new Text('TextField Widget'),
-        ), body: new Column(
-        children: <Widget>[
-          new TextField(
-            onChanged: (String txt) {
-              setState(() {
-                text = txt;
-              });
-            },
-            decoration: new InputDecoration(hintText: 'input username', labelText: 'Username'),
+          title: new Text('Button Widget'),
+        ),
+          body: new Column(
+              children: <Widget>[
+                new RaisedButton(onPressed: ()
+                {
+                method1('You Press Button');
+                },
+                  child: new Text('Klik Button'),),
+                new FlatButton(onPressed: null, child: new Text('The Flat Button')),
+                new Text(textButton),
+              ],
           ),
-          new Text(text)
-        ],
-      ),
       ),
     );
   }
