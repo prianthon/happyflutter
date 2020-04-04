@@ -11,41 +11,27 @@ class application extends StatefulWidget {
 
 class _applicationState extends State<application> {
 
-  SimpleDialog sd;
-
   void dialog() {
-    sd = new SimpleDialog(
-      title: new Text('Pilih Salah Satu'),
-      children: <Widget>[
-        new SimpleDialogOption(
-          child: new Text('Jakarta'),
-          onPressed: () {print('Jakarta');},
-        ),
-        new SimpleDialogOption(
-          child: new Text('Padang'),
-          onPressed: () {print('Padang');},
-        ),
-        new SimpleDialogOption(
-          child: new Text('Close'),
-          onPressed: () {Navigator.pop(context);},
-        ),
-      ],
-    );
-    showDialog(context: context, child: sd);
+    showDialog(
+      context: context,
+      child: new AlertDialog(
+        title: new Text('Warning'),
+        content: new Text('Anda yakin ingin keluar'),
+        actions: <Widget>[
+          new IconButton(icon: Icon(Icons.close), onPressed: () {Navigator.pop(context);})
+        ],
+      ));
   }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Notification Widget'),
-        backgroundColor: Colors.blue,
+        title: new Text('Alert Dialog'),
       ),
       body: new Center(
-        child: new RaisedButton(onPressed: () {
-          dialog();
-        },
-          child: new Text('Show Simple Dialog'),
-        ),
+        child: new RaisedButton(
+          onPressed: (){dialog();},
+          child: new Text('Alert Dialog'),),
       ),
     );
   }
