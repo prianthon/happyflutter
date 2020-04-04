@@ -1,6 +1,4 @@
-// Routes Widget
 import 'package:flutter/material.dart';
-import 'halamanlain.dart';
 
 void main() {
   runApp(new MaterialApp(home: application()));
@@ -12,40 +10,41 @@ class application extends StatefulWidget {
 }
 
 class _applicationState extends State<application> {
+
+  SimpleDialog sd;
+
+  void dialog() {
+    sd = new SimpleDialog(
+      title: new Text('Pilih Salah Satu'),
+      children: <Widget>[
+        new SimpleDialogOption(
+          child: new Text('Jakarta'),
+          onPressed: () {print('Jakarta');},
+        ),
+        new SimpleDialogOption(
+          child: new Text('Padang'),
+          onPressed: () {print('Padang');},
+        ),
+        new SimpleDialogOption(
+          child: new Text('Close'),
+          onPressed: () {Navigator.pop(context);},
+        ),
+      ],
+    );
+    showDialog(context: context, child: sd);
+  }
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(
-        title: new Text('Navigasi Drawer'),
-        backgroundColor: Colors.green,
+      appBar: new AppBar(
+        title: new Text('Notification Widget'),
+        backgroundColor: Colors.blue,
       ),
-      drawer: new Drawer(
-        child: new ListView(
-          children: <Widget>[
-            new UserAccountsDrawerHeader(
-                accountName: Text('Pri Anton Subardio'),
-                accountEmail: Text('ceo@mutiarasoka.id'),
-                currentAccountPicture: new CircleAvatar(backgroundColor: Colors.black26, child: new Text('P'),),
-                decoration: new BoxDecoration(color: Colors.lightBlue),
-                otherAccountsPictures: <Widget>[
-                new CircleAvatar(backgroundColor: Colors.black26, child: new Text('Y'),),
-                new CircleAvatar(backgroundColor: Colors.black26, child: new Text('W'),),
-                ],
-      ),
-                new ListTile(title: new Text('Home Page'),
-                  trailing: new Icon(Icons.home),
-                    onTap: () => Navigator.of(context).push(new
-                    MaterialPageRoute(builder: (BuildContext context) => new pagebaru('Welcome to Home Page'))),
-                ),
-                new ListTile(title: new Text('List Laptop'),
-                  trailing: new Icon(Icons.laptop),
-                  onTap: () => Navigator.of(context).push(new
-                  MaterialPageRoute(builder: (BuildContext context) => new pagebaru('Welcome to My List Product'))),
-                ),
-                new ListTile(title: new Text('Close'),
-                  trailing: new Icon(Icons.close),
-                  onTap: (){Navigator.pop(context);},),
-          ],
+      body: new Center(
+        child: new RaisedButton(onPressed: () {
+          dialog();
+        },
+          child: new Text('Show Simple Dialog'),
         ),
       ),
     );
