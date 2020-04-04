@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'customw.dart';
 
 void main() {
   runApp(new application());
@@ -11,12 +10,29 @@ class application extends StatefulWidget {
 }
 
 class _applicationState extends State<application> {
+
+  String text = '';
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Custom Method Widget',
+      title: 'Dummy Application',
       home: new Scaffold(
-        body: new customwidget(),
+        appBar: new AppBar(
+          backgroundColor: Colors.green,
+          title: new Text('TextField Widget'),
+        ), body: new Column(
+        children: <Widget>[
+          new TextField(
+            onChanged: (String txt) {
+              setState(() {
+                text = txt;
+              });
+            },
+            decoration: new InputDecoration(hintText: 'input username', labelText: 'Username'),
+          ),
+          new Text(text)
+        ],
+      ),
       ),
     );
   }
