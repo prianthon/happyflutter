@@ -1,127 +1,60 @@
-// toast
+// animasi transisi
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(HeroApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => new _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  initState() {
-    super.initState();
-  }
-
-  void showLongToast() {
-    Fluttertoast.showToast(
-      msg: "This is Long Toast",
-      toastLength: Toast.LENGTH_LONG,
-    );
-  }
-
-  void showWebColoredToast() {
-    Fluttertoast.showToast(
-      msg: "This is Colored Toast with android duration of 5 Sec",
-      toastLength: Toast.LENGTH_SHORT,
-      webBgColor: "#e74c3c",
-      timeInSecForIosWeb: 5,
-    );
-  }
-
-  void showColoredToast() {
-    Fluttertoast.showToast(
-      msg: "This is Colored Toast with android duration of 5 Sec",
-      toastLength: Toast.LENGTH_SHORT,
-      backgroundColor: Colors.red,
-      textColor: Colors.white);
-  }
-
-  void showShortToast() {
-    Fluttertoast.showToast(
-      msg: "This is Short Toast",
-      toastLength: Toast.LENGTH_SHORT,
-      timeInSecForIosWeb: 1);
-  }
-
-  void showTopShortToast() {
-    Fluttertoast.showToast(
-      msg: "This is Top Short Toast",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 1);
-  }
-
-  void showCenterShortToast() {
-    Fluttertoast.showToast(
-      msg: "This is Center Short Toast",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 1);
-  }
-
-  void cancelToast() {
-    Fluttertoast.cancel();
-  }
-
+class HeroApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Flutter Toast'),
-        ),
-        body: new Center(
-          child: new Column(
-            children: <Widget>[
-              new Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: new RaisedButton(
-                  child: new Text('Show Long Toast'),
-                  onPressed: showLongToast),
-                ),
-                new Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
-                    child: new Text('Show Short Toast'),
-                    onPressed: showShortToast),
-                  ),
-                new Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
-                    child: new Text('Show Center Short Toast'),
-                    onPressed: showCenterShortToast),
-                  ),
-                new Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
-                    child: new Text('Show Top Short Toast'),
-                    onPressed: showTopShortToast),
-                  ),
-                new Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
-                    child: new Text('Show Colored Toast'),
-                    onPressed: showColoredToast),
-                  ),
-                new Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
-                    child: new Text('Show Web Colored Toast'),
-                    onPressed: showWebColoredToast),
-                  ),
-                new Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
-                    child: new Text('Cancel Toasts'),
-                    onPressed: cancelToast,
-                  ),
-              ),
-            ],
+    return MaterialApp(
+      title: 'Animasi Transisi',
+      home: MainScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MainScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Main Screen'),
+        backgroundColor: Colors.green,
+      ),
+      body: GestureDetector(
+        child: Hero(
+          tag: 'imageHero',
+          child: Image.network(
+            'http://www.udacoding.com/wp-content/uploads/2019/01/49907058_339219876931828_8623740342957807434_n.jpg',
           ),
         ),
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return DetailScreen();
+          }));
+        },
+      ),
+    );
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        child: Center(
+          child: Hero(
+            tag: 'imageHero',
+            child: Image.network(
+              'http://www.udacoding.com/wp-content/uploads/2019/01/49907058_339219876931828_8623740342957807434_n.jpg',
+            ),
+          ),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }
