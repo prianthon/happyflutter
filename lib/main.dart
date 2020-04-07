@@ -1,37 +1,32 @@
+// snackbar
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(new MaterialApp(home: application()));
+  runApp(new MaterialApp(home: MyApp()));
 }
 
-class application extends StatefulWidget {
-  @override
-  _applicationState createState() => _applicationState();
-}
+class MyApp extends StatelessWidget {
 
-class _applicationState extends State<application> {
+  final GlobalKey<ScaffoldState> skey = new
+  GlobalKey<ScaffoldState>();
 
-  void dialog() {
-    showDialog(
-      context: context,
-      child: new AlertDialog(
-        title: new Text('Warning'),
-        content: new Text('Anda yakin ingin keluar'),
-        actions: <Widget>[
-          new IconButton(icon: Icon(Icons.close), onPressed: () {Navigator.pop(context);})
-        ],
-      ));
+  void method1() {
+    skey.currentState.showSnackBar(
+        new SnackBar(content: new Text('this is Snackbar')));
   }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Alert Dialog'),
+        title: new Text('Snackbar'),
       ),
+      key: skey,
       body: new Center(
-        child: new RaisedButton(
-          onPressed: (){dialog();},
-          child: new Text('Alert Dialog'),),
+        child: new RaisedButton(onPressed: () {
+          method1();
+        },
+          child: new Text('Snackbar'),),
       ),
     );
   }
