@@ -1,38 +1,56 @@
-// animasi transisi
+// pengiriman valur
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(HeroApp());
-
-class HeroApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Animasi Transisi',
-      home: MainScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+class Todo {
+  final String title;
+  final String description;
+  Todo(this.title, this.description);
 }
 
-class MainScreen extends StatelessWidget {
+void main() {
+  runApp(MaterialApp(
+    title: 'Kirim data Apps',
+    debugShowCheckedModeBanner: false,
+    home: TodosScreen(
+      todos: List.generate(
+        10,
+          (i) => Todo(
+            'Judul Berita $i',
+            'Detail isi berita ke $i',
+          ),
+      ),
+    ),
+  ));
+}
+
+class TodosScreen extends StatelessWidget {
+  final List<Todo> todos;
+
+  TodosScreen({Key key, @required this.todos}):super(key:key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Main Screen'),
+        title: Text('List Berita'),
         backgroundColor: Colors.green,
       ),
-      body: GestureDetector(
-        child: Hero(
-          tag: 'imageHero',
-          child: Image.network(
-            'http://www.udacoding.com/wp-content/uploads/2019/01/49907058_339219876931828_8623740342957807434_n.jpg',
-          ),
-        ),
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return DetailScreen();
-          }));
+      body: ListView.builder(
+        itemCount: todos.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(todos[index].title),
+
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailScreen(todo: todos[index]),
+                ),
+              );
+            },
+          );
         },
       ),
     );
@@ -40,21 +58,20 @@ class MainScreen extends StatelessWidget {
 }
 
 class DetailScreen extends StatelessWidget {
+
+  final Todo todo;
+  DetailScreen({Key key, @required this.todo}):super(key:key);
   @override
   Widget build(BuildContext context) {
+    // Use the Todo to create our UI
     return Scaffold(
-      body: GestureDetector(
-        child: Center(
-          child: Hero(
-            tag: 'imageHero',
-            child: Image.network(
-              'http://www.udacoding.com/wp-content/uploads/2019/01/49907058_339219876931828_8623740342957807434_n.jpg',
-            ),
-          ),
-        ),
-        onTap: () {
-          Navigator.pop(context);
-        },
+      appBar: AppBar(
+        title: Text(todo.title),
+        backgroundColor: Colors.green,
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text(todo.description),
       ),
     );
   }
