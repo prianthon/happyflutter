@@ -1,77 +1,79 @@
-// pengiriman valur
-import 'package:flutter/foundation.dart';
+// pengembalian data 
 import 'package:flutter/material.dart';
-
-class Todo {
-  final String title;
-  final String description;
-  Todo(this.title, this.description);
-}
 
 void main() {
   runApp(MaterialApp(
-    title: 'Kirim data Apps',
+    title: 'Pengembalian Data',
+    home: HomeScreen(),
     debugShowCheckedModeBanner: false,
-    home: TodosScreen(
-      todos: List.generate(
-        10,
-          (i) => Todo(
-            'Judul Berita $i',
-            'Detail isi berita ke $i',
-          ),
-      ),
-    ),
   ));
 }
 
-class TodosScreen extends StatelessWidget {
-  final List<Todo> todos;
-
-  TodosScreen({Key key, @required this.todos}):super(key:key);
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Berita'),
+        title: Text('Pengembalian Data Apps'),
         backgroundColor: Colors.green,
       ),
-      body: ListView.builder(
-        itemCount: todos.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(todos[index].title),
-
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailScreen(todo: todos[index]),
-                ),
-              );
-            },
-          );
-        },
-      ),
+      body: Center(child: SelectionButton()),
     );
   }
 }
 
-class DetailScreen extends StatelessWidget {
-
-  final Todo todo;
-  DetailScreen({Key key, @required this.todo}):super(key:key);
+class SelectionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Use the Todo to create our UI
+    return RaisedButton(
+      onPressed: () {
+        _navigateAndDisplaySelection(context);
+      },
+      child: Text('Silahkan Tekan tombol untuk memilih'),
+    );
+  }
+  final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder:(context) => SelectionScreen()),
+      );
+  Scaffold.of(context)
+  ..removeCurrentSnackBar()
+  ..showSnackBar(SnackBar(content: Text("$result")));
+}
+}
+
+class SelectionScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(todo.title),
+        title: Text('Silahkan Pilih'),
         backgroundColor: Colors.green,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text(todo.description),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.pop(context,'Anda Memilih Yes!');
+                },
+                child: Text('Yes!'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.pop(context,'Anda Memilih No.');
+                },
+                child: Text('No.'),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
